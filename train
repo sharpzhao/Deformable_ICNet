@@ -27,6 +27,7 @@ parser.add_argument('--n_cpu', type=int, default=8, help='number of CPU threads 
 parser.add_argument('--checkpoint', type=str, default=None, help='path to model checkpoint to resume training')
 parser.add_argument('--epoch', type=int, default=0, help='epoch to start training')
 parser.add_argument('--n_classes', type=int, default=34, help='total classes in')
+parser.add_argument('--deformable', type=int, default=0, help='total classes in')
 opt = parser.parse_args()
 
 print(opt)
@@ -56,7 +57,10 @@ optim = optimizers.Adam(lr=opt.lr)
 if opt.checkpoint:
     net = load_model(opt.checkpoint, custom_objects={'tf':tf})
 else:
-    net = model.build_bn(opt.image_width, opt.image_height, opt.n_classes, train=True)
+    if opt.deformable == 0:
+        net = model.build_bn(opt.image_width, opt.image_height, opt.n_classes, train=True)
+    else:
+        net = model.build_deformable_bn(opt.image_width, opt.image_height, opt.n_classes, train=True)
 if opt.n_gpu > 1:
     net = multi_gpu_model(net, opt.n_gpu)
 
