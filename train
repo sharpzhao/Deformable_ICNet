@@ -54,7 +54,7 @@ optim = optimizers.Adam(lr=opt.lr)
 
 # Model
 if opt.checkpoint:
-    net = load_model(opt.checkpoint)
+    net = load_model(opt.checkpoint, custom_objects={'tf':tf})
 else:
     net = model.build_bn(opt.image_width, opt.image_height, opt.n_classes, train=True)
 if opt.n_gpu > 1:
