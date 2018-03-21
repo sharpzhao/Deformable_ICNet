@@ -47,10 +47,10 @@ duration = time.time() - start_time
 print('Generated segmentations in %s seconds -- %s FPS' % (duration, 1.0/duration))
 
 # Save output image
-with open('datasets/mapillary/config.json') as config_file:
+with open('datasets/config.json') as config_file:
     config = json.load(config_file)
 labels = config['labels']
 
-output = apply_color_map(np.argmax(y[0], axis=-1), labels)
+output = apply_color_map(np.transpose(np.argmax(y[0], axis=-1), (2, 1, 0)), labels)
 cv2.imwrite('output/output_sample.png', cv2.resize(output, (image_width, image_height)))
 ###############

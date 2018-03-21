@@ -116,8 +116,8 @@ class Visualization(Callback):
         self.counter = 0
 
         # TODO: Remove this lazy hardcoded paths
-        self.test_images_list = glob.glob('datasets/mapillary/testing/images/*')
-        with open('datasets/mapillary/config.json') as config_file:
+        self.test_images_list = glob.glob('datasets/testing/images/*')
+        with open('datasets/config.json') as config_file:
             config = json.load(config_file)
         self.labels = config['labels']
         
@@ -158,10 +158,15 @@ class ExpDecay:
 # Taken from Mappillary Vistas demo.py
 def apply_color_map(image_array, labels):
     color_array = np.zeros((image_array.shape[0], image_array.shape[1], 3), dtype=np.uint8)
+    print(color_array.shape)
 
     for label_id, label in enumerate(labels):
         # set all pixels with the current label to the color of the current label
-        color_array[image_array == label_id] = label["color"]
+        maps = image_array == label_id
+        for i in range(maps.shape[0]):
+            for j in range(maps.shape[1]):
+                if maps[i][j]:
+                    color_array[i][j] = label["color"]
 
     return color_array
     

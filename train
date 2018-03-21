@@ -41,7 +41,7 @@ sess = tf.Session(config=config)
 K.set_session(sess)
 
 # Callbacks
-checkpoint = ModelCheckpoint('output/weights.{epoch:03d}-{val_conv6_cls_categorical_accuracy:.3f}.h5', monitor='val_conv6_cls_categorical_accuracy', mode='max')
+checkpoint = ModelCheckpoint('nd_output/weights.{epoch:03d}-{val_conv6_cls_categorical_accuracy:.3f}.h5', monitor='val_conv6_cls_categorical_accuracy', mode='max', period=5)
 tensorboard = TensorBoard(batch_size=opt.batch_size)
 lr_decay = LearningRateScheduler(PolyDecay(opt.lr, opt.decay, opt.n_epochs).scheduler)
 
