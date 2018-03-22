@@ -51,6 +51,6 @@ with open('datasets/config.json') as config_file:
     config = json.load(config_file)
 labels = config['labels']
 
-output = apply_color_map(np.transpose(np.argmax(y[0], axis=-1), (2, 1, 0)), labels)
+output = apply_color_map(np.transpose(np.argmax(y[0], axis=-1), (1, 2, 0)), labels)
 cv2.imwrite('output/output_sample.png', cv2.resize(output, (image_width, image_height)))
 ###############
